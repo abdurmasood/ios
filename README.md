@@ -1,79 +1,118 @@
-# Visual Studio Code - Open Source ("Code - OSS")
+# Insight OS - AI Enabled Writing OSS
 
-[![Feature Requests](https://img.shields.io/github/issues/microsoft/vscode/feature-request.svg)](https://github.com/microsoft/vscode/issues?q=is%3Aopen+is%3Aissue+label%3Afeature-request+sort%3Areactions-%2B1-desc)
-[![Bugs](https://img.shields.io/github/issues/microsoft/vscode/bug.svg)](https://github.com/microsoft/vscode/issues?utf8=✓&q=is%3Aissue+is%3Aopen+label%3Abug)
-[![Gitter](https://img.shields.io/badge/chat-on%20gitter-yellow.svg)](https://gitter.im/Microsoft/vscode)
-
-## The Repository
-
-This repository ("`Code - OSS`") is where we (Microsoft) develop the [Visual Studio Code](https://code.visualstudio.com) product together with the community. Not only do we work on code and issues here, we also publish our [roadmap](https://github.com/microsoft/vscode/wiki/Roadmap), [monthly iteration plans](https://github.com/microsoft/vscode/wiki/Iteration-Plans), and our [endgame plans](https://github.com/microsoft/vscode/wiki/Running-the-Endgame). This source code is available to everyone under the standard [MIT license](https://github.com/microsoft/vscode/blob/main/LICENSE.txt).
-
-## Visual Studio Code
+*Empowering writers with intelligent assistance for better content creation*
 
 <p align="center">
-  <img alt="VS Code in action" src="https://user-images.githubusercontent.com/35271042/118224532-3842c400-b438-11eb-923d-a5f66fa6785a.png">
+  <a href="https://github.com/abdurmasood/vswrite/issues?q=is%3Aopen+is%3Aissue+label%3Afeature-request+sort%3Areactions-%2B1-desc">
+    <img alt="Feature Requests" src="https://img.shields.io/github/issues/abdurmasood/vswrite/feature-request.svg">
+  </a>
+  <a href="https://github.com/abdurmasood/vswrite/issues?utf8=✓&q=is%3Aissue+is%3Aopen+label%3Abug">
+    <img alt="Bugs" src="https://img.shields.io/github/issues/abdurmasood/vswrite/bug.svg">
+  </a>
+  <a href="https://gitter.im/abdurmasood/vswrite">
+    <img alt="Chat on Gitter" src="https://img.shields.io/badge/chat-on%20gitter-yellow.svg">
+  </a>
 </p>
 
-[Visual Studio Code](https://code.visualstudio.com) is a distribution of the `Code - OSS` repository with Microsoft-specific customizations released under a traditional [Microsoft product license](https://code.visualstudio.com/License/).
+## About Insight OS
 
-[Visual Studio Code](https://code.visualstudio.com) combines the simplicity of a code editor with what developers need for their core edit-build-debug cycle. It provides comprehensive code editing, navigation, and understanding support along with lightweight debugging, a rich extensibility model, and lightweight integration with existing tools.
+Insight OS is an open-source, AI-powered writing platform designed to help writers of all levels create better content. Built on a foundation of advanced language models and intuitive design, Insight OS provides intelligent writing assistance, real-time feedback, and collaborative tools to enhance your writing process.
 
-Visual Studio Code is updated monthly with new features and bug fixes. You can download it for Windows, macOS, and Linux on [Visual Studio Code's website](https://code.visualstudio.com/Download). To get the latest releases every day, install the [Insiders build](https://code.visualstudio.com/insiders).
+This repository contains the core platform where our community of writers, developers, and AI researchers collaborate to build the future of intelligent writing assistance. We publish our [development roadmap](https://github.com/abdurmasood/vswrite/wiki/Roadmap), [feature releases](https://github.com/abdurmasood/vswrite/releases), and maintain open communication about our vision for AI-assisted writing.
+
+The platform is available under the [MIT license](LICENSE.txt), ensuring it remains free and accessible to writers everywhere.
+
+## Insight OS Features
+
+<!-- <p align="center">
+  <img alt="Insight OS in action" src="https://via.placeholder.com/800x400/4A90E2/FFFFFF?text=Insight+OS+Writing+Platform">
+</p> -->
+
+Insight OS combines the elegance of a modern writing interface with the power of artificial intelligence to enhance your writing process. Built for writers, content creators, and anyone who works with text, it provides intelligent assistance while maintaining the natural flow of your creative process.
+
+**Key Features:**
+- **AI Writing Assistant**: Real-time suggestions for grammar, style, and content improvement
+- **Smart Auto-completion**: Context-aware text suggestions that understand your writing intent
+- **Multi-format Support**: Write in Markdown, rich text, or plain text with seamless format conversion
+- **Collaborative Writing**: Real-time collaboration tools for team writing projects
+- **Research Integration**: Built-in research tools and citation management
+- **Custom Writing Modes**: Specialized interfaces for different types of writing (academic, creative, technical, etc.)
+
+The platform is regularly updated with new AI models and writing features. Access the latest features through our web platform or download the desktop application for offline writing capabilities.
 
 ## Contributing
 
-There are many ways in which you can participate in this project, for example:
+Join our community of writers, developers, and AI researchers in building the future of intelligent writing assistance. There are many ways to contribute:
 
-* [Submit bugs and feature requests](https://github.com/microsoft/vscode/issues), and help us verify as they are checked in
-* Review [source code changes](https://github.com/microsoft/vscode/pulls)
-* Review the [documentation](https://github.com/microsoft/vscode-docs) and make pull requests for anything from typos to additional and new content
+**For Writers & Content Creators:**
+* [Test new writing features](https://github.com/abdurmasood/vswrite/issues?q=is%3Aopen+is%3Aissue+label%3Atesting) and provide feedback
+* [Share feature requests](https://github.com/abdurmasood/vswrite/issues/new?template=feature_request.md) for writing tools you'd like to see
+* Contribute to our [writing style guides](https://github.com/abdurmasood/vswrite/wiki/Style-Guides) and best practices documentation
+* Help improve AI training data through writing samples and feedback
 
-If you are interested in fixing issues and contributing directly to the code base,
-please see the document [How to Contribute](https://github.com/microsoft/vscode/wiki/How-to-Contribute), which covers the following:
+**For Developers & AI Researchers:**
+* [Submit bug reports](https://github.com/abdurmasood/vswrite/issues/new?template=bug_report.md) and help us verify fixes
+* Review [code changes](https://github.com/abdurmasood/vswrite/pulls) and contribute improvements
+* Work on [AI model improvements](https://github.com/abdurmasood/vswrite/wiki/AI-Models) and language processing features
+* Develop new writing tools and integrations
 
-* [How to build and run from source](https://github.com/microsoft/vscode/wiki/How-to-Contribute)
-* [The development workflow, including debugging and running tests](https://github.com/microsoft/vscode/wiki/How-to-Contribute#debugging)
-* [Coding guidelines](https://github.com/microsoft/vscode/wiki/Coding-Guidelines)
-* [Submitting pull requests](https://github.com/microsoft/vscode/wiki/How-to-Contribute#pull-requests)
-* [Finding an issue to work on](https://github.com/microsoft/vscode/wiki/How-to-Contribute#where-to-contribute)
-* [Contributing to translations](https://aka.ms/vscodeloc)
+**Getting Started:**
+For detailed contribution guidelines, see our [Contributing Guide](CONTRIBUTING.md), which covers:
+* Setting up the development environment
+* Code style and testing requirements  
+* Submitting pull requests and feature proposals
+* Working with AI models and training data
+* Community guidelines and communication channels
 
-## Feedback
+## Writing Ecosystem
 
-* Ask a question on [Stack Overflow](https://stackoverflow.com/questions/tagged/vscode)
-* [Request a new feature](CONTRIBUTING.md)
-* Upvote [popular feature requests](https://github.com/microsoft/vscode/issues?q=is%3Aopen+is%3Aissue+label%3Afeature-request+sort%3Areactions-%2B1-desc)
-* [File an issue](https://github.com/microsoft/vscode/issues)
-* Connect with the extension author community on [GitHub Discussions](https://github.com/microsoft/vscode-discussions/discussions) or [Slack](https://aka.ms/vscode-dev-community)
-* Follow [@code](https://twitter.com/code) and let us know what you think!
+Insight OS is part of a broader ecosystem of writing tools and AI research projects. Many specialized components and integrations live in separate repositories:
 
-See our [wiki](https://github.com/microsoft/vscode/wiki/Feedback-Channels) for a description of each of these channels and information on some other available community-driven channels.
+**AI & Language Models:**
+* [insight-language-models](https://github.com/abdurmasood/insight-language-models): Custom language models trained for writing assistance
+* [writing-style-analyzer](https://github.com/abdurmasood/writing-style-analyzer): AI-powered style and tone analysis tools
+* [research-integration-api](https://github.com/abdurmasood/research-integration-api): Academic and web research integration services
 
-## Related Projects
+**Writing Tools & Extensions:**
+* [markdown-enhanced](https://github.com/abdurmasood/markdown-enhanced): Advanced Markdown editing and preview features
+* [citation-manager](https://github.com/abdurmasood/citation-manager): Academic citation and bibliography management
+* [collaborative-editor](https://github.com/abdurmasood/collaborative-editor): Real-time collaborative writing engine
 
-Many of the core components and extensions to VS Code live in their own repositories on GitHub. For example, the [node debug adapter](https://github.com/microsoft/vscode-node-debug) and the [mono debug adapter](https://github.com/microsoft/vscode-mono-debug) repositories are separate from each other. For a complete list, please visit the [Related Projects](https://github.com/microsoft/vscode/wiki/Related-Projects) page on our [wiki](https://github.com/microsoft/vscode/wiki).
+**Platform Integrations:**
+* [notion-sync](https://github.com/abdurmasood/notion-sync): Seamless integration with Notion workspaces
+* [google-docs-bridge](https://github.com/abdurmasood/google-docs-bridge): Import/export compatibility with Google Docs
+* [publishing-tools](https://github.com/abdurmasood/publishing-tools): Direct publishing to various platforms (Medium, WordPress, etc.)
 
-## Bundled Extensions
+For a complete directory of writing tools and integrations, visit our [Writing Ecosystem](https://github.com/abdurmasood/vswrite/wiki/Writing-Ecosystem) page.
 
-VS Code includes a set of built-in extensions located in the [extensions](extensions) folder, including grammars and snippets for many languages. Extensions that provide rich language support (code completion, Go to Definition) for a language have the suffix `language-features`. For example, the `json` extension provides coloring for `JSON` and the `json-language-features` extension provides rich language support for `JSON`.
+## Built-in Writing Features
 
-## Development Container
+Insight OS comes with a comprehensive set of built-in writing assistance tools located in the [features](features) folder. These core features provide intelligent writing support without requiring additional installations:
 
-This repository includes a Visual Studio Code Dev Containers / GitHub Codespaces development container.
+**Grammar & Style:**
+* **Smart Grammar Checker**: Real-time grammar detection and correction suggestions
+* **Style Analyzer**: Tone, voice, and readability analysis with improvement recommendations
+* **Vocabulary Enhancement**: Context-aware synonym suggestions and word choice optimization
 
-* For [Dev Containers](https://aka.ms/vscode-remote/download/containers), use the **Dev Containers: Clone Repository in Container Volume...** command which creates a Docker volume for better disk I/O on macOS and Windows.
-  * If you already have VS Code and Docker installed, you can also click [here](https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url=https://github.com/microsoft/vscode) to get started. This will cause VS Code to automatically install the Dev Containers extension if needed, clone the source code into a container volume, and spin up a dev container for use.
+**Writing Modes:**
+* **Academic Writing**: Citation management, formal tone guidance, and research integration
+* **Creative Writing**: Character development tools, plot structure assistance, and narrative flow analysis
+* **Technical Writing**: Documentation standards, API reference formatting, and technical accuracy checking
+* **Business Writing**: Professional tone analysis, conciseness optimization, and clarity enhancement
 
-* For Codespaces, install the [GitHub Codespaces](https://marketplace.visualstudio.com/items?itemName=GitHub.codespaces) extension in VS Code, and use the **Codespaces: Create New Codespace** command.
+**AI-Powered Assistance:**
+* **Content Suggestions**: AI-generated ideas and content expansion based on your writing context
+* **Auto-completion**: Intelligent sentence and paragraph completion that matches your writing style
+* **Research Assistant**: Integrated fact-checking and source recommendation while you write
 
-Docker / the Codespace should have at least **4 Cores and 6 GB of RAM (8 GB recommended)** to run full build. See the [development container README](.devcontainer/README.md) for more information.
+Each writing mode provides specialized language understanding and context-aware assistance tailored to specific writing requirements and audiences.
 
 ## Code of Conduct
 
-This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
+This project has adopted the [Contributor Covenant Code of Conduct](https://www.contributor-covenant.org/version/2/1/code_of_conduct/). We are committed to providing a welcoming and inclusive environment for all contributors, regardless of background or writing experience. For more information see our [Code of Conduct](CODE_OF_CONDUCT.md) or contact [community@insightos.org](mailto:community@insightos.org) with any questions or concerns.
 
 ## License
 
-Copyright (c) Microsoft Corporation. All rights reserved.
+Copyright (c) Insight OS Contributors. All rights reserved.
 
 Licensed under the [MIT](LICENSE.txt) license.
