@@ -1,0 +1,18 @@
+{
+	"extends": "../../src/tsconfig.base.json",
+	"compilerOptions": {
+		"outDir": "./out",
+		"lib": [
+			"ES2022"
+		],
+		"types": [
+			"node"
+		],
+		"paths": {
+			"vscode": ["../../src/vscode-dts/vscode.d.ts"]
+		}
+	},
+	"include": [
+		"src/**/*"
+	]
+}
