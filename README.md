@@ -22,23 +22,6 @@ This repository contains the core platform where our community of writers, devel
 
 The platform is available under the [MIT license](LICENSE.txt), ensuring it remains free and accessible to writers everywhere.
 
-## Insight OS Features
-
-<!-- <p align="center">
-  <img alt="Insight OS in action" src="https://via.placeholder.com/800x400/4A90E2/FFFFFF?text=Insight+OS+Writing+Platform">
-</p> -->
-
-Insight OS combines the elegance of a modern writing interface with the power of artificial intelligence to enhance your writing process. Built for writers, content creators, and anyone who works with text, it provides intelligent assistance while maintaining the natural flow of your creative process.
-
-**Key Features:**
-- **AI Writing Assistant**: Real-time suggestions for grammar, style, and content improvement
-- **Smart Auto-completion**: Context-aware text suggestions that understand your writing intent
-- **Multi-format Support**: Write in Markdown, rich text, or plain text with seamless format conversion
-- **Collaborative Writing**: Real-time collaboration tools for team writing projects
-- **Research Integration**: Built-in research tools and citation management
-- **Custom Writing Modes**: Specialized interfaces for different types of writing (academic, creative, technical, etc.)
-
-The platform is regularly updated with new AI models and writing features. Access the latest features through our web platform or download the desktop application for offline writing capabilities.
 
 ## Contributing
 
@@ -64,48 +47,64 @@ For detailed contribution guidelines, see our [Contributing Guide](CONTRIBUTING.
 * Working with AI models and training data
 * Community guidelines and communication channels
 
-## Writing Ecosystem
+## How to Run
 
-Insight OS is part of a broader ecosystem of writing tools and AI research projects. Many specialized components and integrations live in separate repositories:
+### Prerequisites
+- Node.js (version 16.x or higher)
+- npm (comes with Node.js)
+- Git
 
-**AI & Language Models:**
-* [insight-language-models](https://github.com/abdurmasood/insight-language-models): Custom language models trained for writing assistance
-* [writing-style-analyzer](https://github.com/abdurmasood/writing-style-analyzer): AI-powered style and tone analysis tools
-* [research-integration-api](https://github.com/abdurmasood/research-integration-api): Academic and web research integration services
+### Installation and Setup
 
-**Writing Tools & Extensions:**
-* [markdown-enhanced](https://github.com/abdurmasood/markdown-enhanced): Advanced Markdown editing and preview features
-* [citation-manager](https://github.com/abdurmasood/citation-manager): Academic citation and bibliography management
-* [collaborative-editor](https://github.com/abdurmasood/collaborative-editor): Real-time collaborative writing engine
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/abdurmasood/vswrite.git
+   cd vswrite
+   ```
 
-**Platform Integrations:**
-* [notion-sync](https://github.com/abdurmasood/notion-sync): Seamless integration with Notion workspaces
-* [google-docs-bridge](https://github.com/abdurmasood/google-docs-bridge): Import/export compatibility with Google Docs
-* [publishing-tools](https://github.com/abdurmasood/publishing-tools): Direct publishing to various platforms (Medium, WordPress, etc.)
+2. **Install dependencies:**
+   ```bash
+   npm install
+   ```
 
-For a complete directory of writing tools and integrations, visit our [Writing Ecosystem](https://github.com/abdurmasood/vswrite/wiki/Writing-Ecosystem) page.
+3. **Development Commands:**
 
-## Built-in Writing Features
+   **Start development mode with hot reloading:**
+   ```bash
+   npm run watch
+   ```
 
-Insight OS comes with a comprehensive set of built-in writing assistance tools located in the [features](features) folder. These core features provide intelligent writing support without requiring additional installations:
+   **Compile TypeScript:**
+   ```bash
+   npm run compile
+   ```
+   
+   **Compile with increased memory (for large builds):**
+   ```bash
+   NODE_OPTIONS="--max-old-space-size=8192" npm run compile
+   ```
 
-**Grammar & Style:**
-* **Smart Grammar Checker**: Real-time grammar detection and correction suggestions
-* **Style Analyzer**: Tone, voice, and readability analysis with improvement recommendations
-* **Vocabulary Enhancement**: Context-aware synonym suggestions and word choice optimization
+   **Run tests:**
+   ```bash
+   npm test
+   ```
 
-**Writing Modes:**
-* **Academic Writing**: Citation management, formal tone guidance, and research integration
-* **Creative Writing**: Character development tools, plot structure assistance, and narrative flow analysis
-* **Technical Writing**: Documentation standards, API reference formatting, and technical accuracy checking
-* **Business Writing**: Professional tone analysis, conciseness optimization, and clarity enhancement
+   **Launch the application:**
+   ```bash
+   ./scripts/code.sh
+   ```
 
-**AI-Powered Assistance:**
-* **Content Suggestions**: AI-generated ideas and content expansion based on your writing context
-* **Auto-completion**: Intelligent sentence and paragraph completion that matches your writing style
-* **Research Assistant**: Integrated fact-checking and source recommendation while you write
+4. **Build for production:**
+   ```bash
+   npm run compile-build
+   ```
 
-Each writing mode provides specialized language understanding and context-aware assistance tailored to specific writing requirements and audiences.
+### Development Workflow
+
+- Use `npm run watch` for active development with automatic rebuilding
+- Extensions are located in the `/extensions/` folder
+- Core platform code is in `/src/vs/`
+- Refer to [CLAUDE.md](CLAUDE.md) for detailed development guidance
 
 ## Code of Conduct
 
