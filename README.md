@@ -1,6 +1,6 @@
-# Insight OS - AI Enabled Writing OSS
+<h1 align="center">Insight OS - AI Enabled Writing OSS</h1>
 
-*Empowering writers with intelligent assistance for better content creation*
+<p align="center"><em>Empowering writers with intelligent assistance for better content creation</em></p>
 
 <p align="center">
   <a href="https://github.com/abdurmasood/vswrite/issues?q=is%3Aopen+is%3Aissue+label%3Afeature-request+sort%3Areactions-%2B1-desc">
