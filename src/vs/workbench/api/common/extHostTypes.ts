@@ -2767,7 +2767,7 @@ export class Task implements vscode.Task {
 
 
 export enum ProgressLocation {
-	SourceControl = 1,
+	// SourceControl = 1, // removed with SCM
 	Window = 10,
 	Notification = 15
 }

@@ -69,8 +69,6 @@ import * as notebookCommon from '../../contrib/notebook/common/notebookCommon.js
 import { CellExecutionUpdateType } from '../../contrib/notebook/common/notebookExecutionService.js';
 import { ICellExecutionComplete, ICellExecutionStateUpdate } from '../../contrib/notebook/common/notebookExecutionStateService.js';
 import { ICellRange } from '../../contrib/notebook/common/notebookRange.js';
-import { ISCMHistoryOptions } from '../../contrib/scm/common/history.js';
-import { InputValidationType } from '../../contrib/scm/common/scm.js';
 import { IWorkspaceSymbol, NotebookPriorityInfo } from '../../contrib/search/common/search.js';
 import { IRawClosedNotebookFileMatch } from '../../contrib/search/common/searchNotebookHelpers.js';
 import { IKeywordRecognitionEvent, ISpeechProviderMetadata, ISpeechToTextEvent, ITextToSpeechEvent } from '../../contrib/speech/common/speechService.js';
@@ -1569,122 +1567,6 @@ export interface MainThreadExtensionServiceShape extends IDisposable {
 	$asBrowserUri(uri: UriComponents): Promise<UriComponents>;
 }
 
-export interface SCMProviderFeatures {
-	hasHistoryProvider?: boolean;
-	hasQuickDiffProvider?: boolean;
-	quickDiffLabel?: string;
-	hasSecondaryQuickDiffProvider?: boolean;
-	secondaryQuickDiffLabel?: string;
-	count?: number;
-	commitTemplate?: string;
-	acceptInputCommand?: languages.Command;
-	actionButton?: SCMActionButtonDto | null;
-	statusBarCommands?: ICommandDto[];
-	contextValue?: string;
-}
-
-export interface SCMActionButtonDto {
-	command: ICommandDto & { shortTitle?: string };
-	secondaryCommands?: ICommandDto[][];
-	enabled: boolean;
-}
-
-export interface SCMGroupFeatures {
-	hideWhenEmpty?: boolean;
-	contextValue?: string;
-}
-
-export type SCMRawResource = [
-	number /*handle*/,
-	UriComponents /*resourceUri*/,
-	[UriComponents | ThemeIcon | undefined, UriComponents | ThemeIcon | undefined] /*icons: light, dark*/,
-	string /*tooltip*/,
-	boolean /*strike through*/,
-	boolean /*faded*/,
-	string /*context value*/,
-	ICommandDto | undefined /*command*/,
-	UriComponents | undefined /* multiFileDiffEditorOriginalUri */,
-	UriComponents | undefined /* multiFileDiffEditorModifiedUri */,
-];
-
-export type SCMRawResourceSplice = [
-	number /* start */,
-	number /* delete count */,
-	SCMRawResource[]
-];
-
-export type SCMRawResourceSplices = [
-	number, /*handle*/
-	SCMRawResourceSplice[]
-];
-
-export interface SCMHistoryItemRefDto {
-	readonly id: string;
-	readonly name: string;
-	readonly revision?: string;
-	readonly category?: string;
-	readonly description?: string;
-	readonly icon?: UriComponents | { light: UriComponents; dark: UriComponents } | ThemeIcon;
-}
-
-export interface SCMHistoryItemRefsChangeEventDto {
-	readonly added: readonly SCMHistoryItemRefDto[];
-	readonly modified: readonly SCMHistoryItemRefDto[];
-	readonly removed: readonly SCMHistoryItemRefDto[];
-	readonly silent: boolean;
-}
-
-export interface SCMHistoryItemDto {
-	readonly id: string;
-	readonly parentIds: string[];
-	readonly subject: string;
-	readonly message: string;
-	readonly displayId?: string;
-	readonly author?: string;
-	readonly authorIcon?: UriComponents | { light: UriComponents; dark: UriComponents } | ThemeIcon;
-	readonly authorEmail?: string;
-	readonly timestamp?: number;
-	readonly statistics?: {
-		readonly files: number;
-		readonly insertions: number;
-		readonly deletions: number;
-	};
-	readonly references?: SCMHistoryItemRefDto[];
-}
-
-export interface SCMHistoryItemChangeDto {
-	readonly uri: UriComponents;
-	readonly originalUri: UriComponents | undefined;
-	readonly modifiedUri: UriComponents | undefined;
-}
-
-export interface MainThreadSCMShape extends IDisposable {
-	$registerSourceControl(handle: number, parentHandle: number | undefined, id: string, label: string, rootUri: UriComponents | undefined, iconPath: UriComponents | { light: UriComponents; dark: UriComponents } | ThemeIcon | undefined, inputBoxDocumentUri: UriComponents): Promise<void>;
-	$updateSourceControl(handle: number, features: SCMProviderFeatures): Promise<void>;
-	$unregisterSourceControl(handle: number): Promise<void>;
-
-	$registerGroups(sourceControlHandle: number, groups: [number /*handle*/, string /*id*/, string /*label*/, SCMGroupFeatures, /* multiDiffEditorEnableViewChanges */ boolean][], splices: SCMRawResourceSplices[]): Promise<void>;
-	$updateGroup(sourceControlHandle: number, handle: number, features: SCMGroupFeatures): Promise<void>;
-	$updateGroupLabel(sourceControlHandle: number, handle: number, label: string): Promise<void>;
-	$unregisterGroup(sourceControlHandle: number, handle: number): Promise<void>;
-
-	$spliceResourceStates(sourceControlHandle: number, splices: SCMRawResourceSplices[]): Promise<void>;
-
-	$setInputBoxValue(sourceControlHandle: number, value: string): Promise<void>;
-	$setInputBoxPlaceholder(sourceControlHandle: number, placeholder: string): Promise<void>;
-	$setInputBoxEnablement(sourceControlHandle: number, enabled: boolean): Promise<void>;
-	$setInputBoxVisibility(sourceControlHandle: number, visible: boolean): Promise<void>;
-	$showValidationMessage(sourceControlHandle: number, message: string | IMarkdownString, type: InputValidationType): Promise<void>;
-	$setValidationProviderIsEnabled(sourceControlHandle: number, enabled: boolean): Promise<void>;
-
-	$onDidChangeHistoryProviderCurrentHistoryItemRefs(sourceControlHandle: number, historyItemRef?: SCMHistoryItemRefDto, historyItemRemoteRef?: SCMHistoryItemRefDto, historyItemBaseRef?: SCMHistoryItemRefDto): Promise<void>;
-	$onDidChangeHistoryProviderHistoryItemRefs(sourceControlHandle: number, historyItemRefs: SCMHistoryItemRefsChangeEventDto): Promise<void>;
-}
-
-export interface MainThreadQuickDiffShape extends IDisposable {
-	$registerQuickDiffProvider(handle: number, selector: IDocumentFilterDto[], id: string, label: string, rootUri: UriComponents | undefined): Promise<void>;
-	$unregisterQuickDiffProvider(handle: number): Promise<void>;
-}
 
 export type DebugSessionUUID = string;
 
@@ -2556,23 +2438,6 @@ export interface ExtHostTerminalShellIntegrationShape {
 	$closeTerminal(instanceId: number): void;
 }
 
-export interface ExtHostSCMShape {
-	$provideOriginalResource(sourceControlHandle: number, uri: UriComponents, token: CancellationToken): Promise<UriComponents | null>;
-	$provideSecondaryOriginalResource(sourceControlHandle: number, uri: UriComponents, token: CancellationToken): Promise<UriComponents | null>;
-	$onInputBoxValueChange(sourceControlHandle: number, value: string): void;
-	$executeResourceCommand(sourceControlHandle: number, groupHandle: number, handle: number, preserveFocus: boolean): Promise<void>;
-	$validateInput(sourceControlHandle: number, value: string, cursorPosition: number): Promise<[string | IMarkdownString, number] | undefined>;
-	$setSelectedSourceControl(selectedSourceControlHandle: number | undefined): Promise<void>;
-	$provideHistoryItemRefs(sourceControlHandle: number, historyItemRefs: string[] | undefined, token: CancellationToken): Promise<SCMHistoryItemRefDto[] | undefined>;
-	$provideHistoryItems(sourceControlHandle: number, options: ISCMHistoryOptions, token: CancellationToken): Promise<SCMHistoryItemDto[] | undefined>;
-	$provideHistoryItemChanges(sourceControlHandle: number, historyItemId: string, historyItemParentId: string | undefined, token: CancellationToken): Promise<SCMHistoryItemChangeDto[] | undefined>;
-	$resolveHistoryItemChatContext(sourceControlHandle: number, historyItemId: string, token: CancellationToken): Promise<string | undefined>;
-	$resolveHistoryItemRefsCommonAncestor(sourceControlHandle: number, historyItemRefs: string[], token: CancellationToken): Promise<string | undefined>;
-}
-
-export interface ExtHostQuickDiffShape {
-	$provideOriginalResource(sourceControlHandle: number, uri: UriComponents, token: CancellationToken): Promise<UriComponents | null>;
-}
 
 export interface ExtHostShareShape {
 	$provideShare(handle: number, shareableItem: IShareableItemDto, token: CancellationToken): Promise<UriComponents | string | undefined>;
@@ -3152,7 +3017,7 @@ export const MainContext = {
 	MainThreadMessageService: createProxyIdentifier<MainThreadMessageServiceShape>('MainThreadMessageService'),
 	MainThreadOutputService: createProxyIdentifier<MainThreadOutputServiceShape>('MainThreadOutputService'),
 	MainThreadProgress: createProxyIdentifier<MainThreadProgressShape>('MainThreadProgress'),
-	MainThreadQuickDiff: createProxyIdentifier<MainThreadQuickDiffShape>('MainThreadQuickDiff'),
+	// MainThreadQuickDiff removed with SCM
 	MainThreadQuickOpen: createProxyIdentifier<MainThreadQuickOpenShape>('MainThreadQuickOpen'),
 	MainThreadStatusBar: createProxyIdentifier<MainThreadStatusBarShape>('MainThreadStatusBar'),
 	MainThreadSecretState: createProxyIdentifier<MainThreadSecretStateShape>('MainThreadSecretState'),
@@ -3172,7 +3037,6 @@ export const MainContext = {
 	MainThreadFileSystem: createProxyIdentifier<MainThreadFileSystemShape>('MainThreadFileSystem'),
 	MainThreadFileSystemEventService: createProxyIdentifier<MainThreadFileSystemEventServiceShape>('MainThreadFileSystemEventService'),
 	MainThreadExtensionService: createProxyIdentifier<MainThreadExtensionServiceShape>('MainThreadExtensionService'),
-	MainThreadSCM: createProxyIdentifier<MainThreadSCMShape>('MainThreadSCM'),
 	MainThreadSearch: createProxyIdentifier<MainThreadSearchShape>('MainThreadSearch'),
 	MainThreadShare: createProxyIdentifier<MainThreadShareShape>('MainThreadShare'),
 	MainThreadTask: createProxyIdentifier<MainThreadTaskShape>('MainThreadTask'),
@@ -3219,14 +3083,12 @@ export const ExtHostContext = {
 	ExtHostLanguages: createProxyIdentifier<ExtHostLanguagesShape>('ExtHostLanguages'),
 	ExtHostLanguageFeatures: createProxyIdentifier<ExtHostLanguageFeaturesShape>('ExtHostLanguageFeatures'),
 	ExtHostQuickOpen: createProxyIdentifier<ExtHostQuickOpenShape>('ExtHostQuickOpen'),
-	ExtHostQuickDiff: createProxyIdentifier<ExtHostQuickDiffShape>('ExtHostQuickDiff'),
 	ExtHostStatusBar: createProxyIdentifier<ExtHostStatusBarShape>('ExtHostStatusBar'),
 	ExtHostShare: createProxyIdentifier<ExtHostShareShape>('ExtHostShare'),
 	ExtHostExtensionService: createProxyIdentifier<ExtHostExtensionServiceShape>('ExtHostExtensionService'),
 	ExtHostLogLevelServiceShape: createProxyIdentifier<ExtHostLogLevelServiceShape>('ExtHostLogLevelServiceShape'),
 	ExtHostTerminalService: createProxyIdentifier<ExtHostTerminalServiceShape>('ExtHostTerminalService'),
 	ExtHostTerminalShellIntegration: createProxyIdentifier<ExtHostTerminalShellIntegrationShape>('ExtHostTerminalShellIntegration'),
-	ExtHostSCM: createProxyIdentifier<ExtHostSCMShape>('ExtHostSCM'),
 	ExtHostSearch: createProxyIdentifier<ExtHostSearchShape>('ExtHostSearch'),
 	ExtHostTask: createProxyIdentifier<ExtHostTaskShape>('ExtHostTask'),
 	ExtHostWorkspace: createProxyIdentifier<ExtHostWorkspaceShape>('ExtHostWorkspace'),

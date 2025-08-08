@@ -19,7 +19,8 @@ import { ModelDecorationOptions } from '../../../../../../editor/common/model/te
 import { Range } from '../../../../../../editor/common/core/range.js';
 import { NotebookCellTextModel } from '../../../common/model/notebookCellTextModel.js';
 import { DetailedLineRangeMapping } from '../../../../../../editor/common/diff/rangeMapping.js';
-import { minimapGutterAddedBackground, minimapGutterDeletedBackground, minimapGutterModifiedBackground, overviewRulerAddedForeground, overviewRulerDeletedForeground, overviewRulerModifiedForeground } from '../../../../scm/common/quickDiff.js';
+import { overviewRulerInfo, overviewRulerError, overviewRulerWarning } from '../../../../../../editor/common/core/editorColorRegistry.js';
+import { minimapInfo, minimapError, minimapWarning } from '../../../../../../platform/theme/common/colors/minimapColors.js';
 import { INotebookOriginalCellModelFactory } from './notebookOriginalCellModelFactory.js';
 import { InlineDecoration, InlineDecorationType } from '../../../../../../editor/common/viewModel/inlineDecorations.js';
 
@@ -166,9 +167,9 @@ export class NotebookCellDiffDecorator extends DisposableStore {
 				minimap: { color: themeColorFromId(minimapColor), position: MinimapPosition.Gutter },
 			});
 		};
-		const modifiedDecoration = createOverviewDecoration(overviewRulerModifiedForeground, minimapGutterModifiedBackground);
-		const addedDecoration = createOverviewDecoration(overviewRulerAddedForeground, minimapGutterAddedBackground);
-		const deletedDecoration = createOverviewDecoration(overviewRulerDeletedForeground, minimapGutterDeletedBackground);
+		const modifiedDecoration = createOverviewDecoration(overviewRulerWarning, minimapWarning);
+		const addedDecoration = createOverviewDecoration(overviewRulerInfo, minimapInfo);
+		const deletedDecoration = createOverviewDecoration(overviewRulerError, minimapError);
 
 		editor.changeViewZones((viewZoneChangeAccessor) => {
 			for (const id of this._viewZones) {

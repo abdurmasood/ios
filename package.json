@@ -3,7 +3,7 @@
   "version": "1.103.0",
   "distro": "64ef829677a2ce7428f802dd768c9d436935a962",
   "author": {
-    "name": "Microsoft Corporation"
+    "name": "Insight OS"
   },
   "license": "MIT",
   "main": "./out/main.js",

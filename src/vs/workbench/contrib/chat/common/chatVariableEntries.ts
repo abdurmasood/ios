@@ -12,7 +12,7 @@ import { IOffsetRange } from '../../../../editor/common/core/ranges/offsetRange.
 import { isLocation, Location, SymbolKind } from '../../../../editor/common/languages.js';
 import { localize } from '../../../../nls.js';
 import { MarkerSeverity, IMarker } from '../../../../platform/markers/common/markers.js';
-import { ISCMHistoryItem } from '../../scm/common/history.js';
+// ISCMHistoryItem removed with SCM
 import { IChatContentReference } from './chatService.js';
 import { IChatRequestVariableValue } from './chatVariables.js';
 
@@ -201,7 +201,7 @@ export interface IPromptTextVariableEntry extends IBaseChatRequestVariableEntry 
 export interface ISCMHistoryItemVariableEntry extends IBaseChatRequestVariableEntry {
 	readonly kind: 'scmHistoryItem';
 	readonly value: URI;
-	readonly historyItem: ISCMHistoryItem;
+	readonly historyItem: any; // ISCMHistoryItem removed with SCM
 }
 
 export type IChatRequestVariableEntry = IGenericChatRequestVariableEntry | IChatRequestImplicitVariableEntry | IChatRequestPasteVariableEntry

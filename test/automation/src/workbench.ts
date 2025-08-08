@@ -10,7 +10,6 @@ import { QuickInput } from './quickinput';
 import { Extensions } from './extensions';
 import { Search } from './search';
 import { Editor } from './editor';
-import { SCM } from './scm';
 import { Debug } from './debug';
 import { StatusBar } from './statusbar';
 import { Problems } from './problems';
@@ -37,7 +36,6 @@ export class Workbench {
 	readonly search: Search;
 	readonly extensions: Extensions;
 	readonly editor: Editor;
-	readonly scm: SCM;
 	readonly debug: Debug;
 	readonly statusbar: StatusBar;
 	readonly problems: Problems;
@@ -57,7 +55,6 @@ export class Workbench {
 		this.search = new Search(code);
 		this.extensions = new Extensions(code, this.quickaccess);
 		this.editor = new Editor(code, this.quickaccess);
-		this.scm = new SCM(code);
 		this.debug = new Debug(code, this.quickaccess, this.editors, this.editor);
 		this.statusbar = new StatusBar(code);
 		this.problems = new Problems(code, this.quickaccess);

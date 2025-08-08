@@ -10,12 +10,12 @@ import { ILifecycleService, LifecyclePhase, ShutdownReason } from '../../../serv
 import { Action2, IAction2Options, MenuId, MenuRegistry, registerAction2 } from '../../../../platform/actions/common/actions.js';
 import { ServicesAccessor } from '../../../../editor/browser/editorExtensions.js';
 import { localize, localize2 } from '../../../../nls.js';
-import { IEditSessionsStorageService, Change, ChangeType, Folder, EditSession, FileType, EDIT_SESSION_SYNC_CATEGORY, EDIT_SESSIONS_CONTAINER_ID, EditSessionSchemaVersion, IEditSessionsLogService, EDIT_SESSIONS_VIEW_ICON, EDIT_SESSIONS_TITLE, EDIT_SESSIONS_SHOW_VIEW, EDIT_SESSIONS_DATA_VIEW_ID, decodeEditSessionFileContent, hashedEditSessionId, editSessionsLogId, EDIT_SESSIONS_PENDING } from '../common/editSessions.js';
-import { ISCMRepository, ISCMService } from '../../scm/common/scm.js';
+import { IEditSessionsStorageService, Change, ChangeType, Folder, EditSession, EDIT_SESSION_SYNC_CATEGORY, EDIT_SESSIONS_CONTAINER_ID, EditSessionSchemaVersion, IEditSessionsLogService, EDIT_SESSIONS_VIEW_ICON, EDIT_SESSIONS_TITLE, EDIT_SESSIONS_SHOW_VIEW, EDIT_SESSIONS_DATA_VIEW_ID, decodeEditSessionFileContent, hashedEditSessionId, editSessionsLogId, EDIT_SESSIONS_PENDING } from '../common/editSessions.js';
+// SCM services removed
 import { IFileService } from '../../../../platform/files/common/files.js';
 import { IWorkspaceContextService, IWorkspaceFolder, WorkbenchState } from '../../../../platform/workspace/common/workspace.js';
 import { URI } from '../../../../base/common/uri.js';
-import { basename, joinPath, relativePath } from '../../../../base/common/resources.js';
+import { basename, joinPath } from '../../../../base/common/resources.js';
 import { encodeBase64 } from '../../../../base/common/buffer.js';
 import { IConfigurationService } from '../../../../platform/configuration/common/configuration.js';
 import { IProgress, IProgressService, IProgressStep, ProgressLocation } from '../../../../platform/progress/common/progress.js';
@@ -68,7 +68,7 @@ import { EditSessionsStoreClient } from '../common/editSessionsStorageClient.js'
 import { IUriIdentityService } from '../../../../platform/uriIdentity/common/uriIdentity.js';
 import { IWorkspaceIdentityService } from '../../../services/workspaces/common/workspaceIdentityService.js';
 import { hashAsync } from '../../../../base/common/hash.js';
-import { ResourceSet } from '../../../../base/common/map.js';
+// ResourceSet removed - not used after SCM removal
 
 registerSingleton(IEditSessionsLogService, EditSessionsLogService, InstantiationType.Delayed);
 registerSingleton(IEditSessionsStorageService, EditSessionsWorkbenchService, InstantiationType.Delayed);
@@ -134,7 +134,7 @@ export class EditSessionsContribution extends Disposable implements IWorkbenchCo
 		@IProgressService private readonly progressService: IProgressService,
 		@IOpenerService private readonly openerService: IOpenerService,
 		@ITelemetryService private readonly telemetryService: ITelemetryService,
-		@ISCMService private readonly scmService: ISCMService,
+		// SCM service removed
 		@INotificationService private readonly notificationService: INotificationService,
 		@IDialogService private readonly dialogService: IDialogService,
 		@IEditSessionsLogService private readonly logService: IEditSessionsLogService,
@@ -633,14 +633,7 @@ export class EditSessionsContribution extends Disposable implements IWorkbenchCo
 			}
 
 			const localChanges = new Set<string>();
-			for (const repository of this.scmService.repositories) {
-				if (repository.provider.rootUri !== undefined &&
-					this.contextService.getWorkspaceFolder(repository.provider.rootUri)?.name === folder.name
-				) {
-					const repositoryChanges = this.getChangedResources(repository);
-					repositoryChanges.forEach((change) => localChanges.add(change.toString()));
-				}
-			}
+			// SCM service removed - no repositories to iterate
 
 			for (const change of folder.workingChanges) {
 				const uri = joinPath(folderRoot.uri, change.relativeFilePath);
@@ -680,84 +673,16 @@ export class EditSessionsContribution extends Disposable implements IWorkbenchCo
 
 	async storeEditSession(fromStoreCommand: boolean, cancellationToken: CancellationToken): Promise<string | undefined> {
 		const folders: Folder[] = [];
-		let editSessionSize = 0;
+		// editSessionSize removed with SCM
 		let hasEdits = false;
 
 		// Save all saveable editors before building edit session contents
 		await this.editorService.saveAll();
 
-		// Do a first pass over all repositories to ensure that the edit session identity is created for each.
-		// This may change the working changes that need to be stored later
-		const createdEditSessionIdentities = new ResourceSet();
-		for (const repository of this.scmService.repositories) {
-			const changedResources = this.getChangedResources(repository);
-			if (!changedResources.size) {
-				continue;
-			}
-			for (const uri of changedResources) {
-				const workspaceFolder = this.contextService.getWorkspaceFolder(uri);
-				if (!workspaceFolder || createdEditSessionIdentities.has(uri)) {
-					continue;
-				}
-				createdEditSessionIdentities.add(uri);
-				await this.editSessionIdentityService.onWillCreateEditSessionIdentity(workspaceFolder, cancellationToken);
-			}
-		}
+		// SCM service removed - skip repository iteration and edit session identity creation
+		// createdEditSessionIdentities removed with SCM
 
-		for (const repository of this.scmService.repositories) {
-			// Look through all resource groups and compute which files were added/modified/deleted
-			const trackedUris = this.getChangedResources(repository); // A URI might appear in more than one resource group
-
-			const workingChanges: Change[] = [];
-
-			const { rootUri } = repository.provider;
-			const workspaceFolder = rootUri ? this.contextService.getWorkspaceFolder(rootUri) : undefined;
-			let name = workspaceFolder?.name;
-
-			for (const uri of trackedUris) {
-				const workspaceFolder = this.contextService.getWorkspaceFolder(uri);
-				if (!workspaceFolder) {
-					this.logService.info(`Skipping working change ${uri.toString()} as no associated workspace folder was found.`);
-
-					continue;
-				}
-
-				name = name ?? workspaceFolder.name;
-				const relativeFilePath = relativePath(workspaceFolder.uri, uri) ?? uri.path;
-
-				// Only deal with file contents for now
-				try {
-					if (!(await this.fileService.stat(uri)).isFile) {
-						continue;
-					}
-				} catch { }
-
-				hasEdits = true;
-
-
-				if (await this.fileService.exists(uri)) {
-					const contents = encodeBase64((await this.fileService.readFile(uri)).value);
-					editSessionSize += contents.length;
-					if (editSessionSize > this.editSessionsStorageService.SIZE_LIMIT) {
-						this.notificationService.error(localize('payload too large', 'Your working changes exceed the size limit and cannot be stored.'));
-						return undefined;
-					}
-
-					workingChanges.push({ type: ChangeType.Addition, fileType: FileType.File, contents: contents, relativeFilePath: relativeFilePath });
-				} else {
-					// Assume it's a deletion
-					workingChanges.push({ type: ChangeType.Deletion, fileType: FileType.File, contents: undefined, relativeFilePath: relativeFilePath });
-				}
-			}
-
-			let canonicalIdentity = undefined;
-			if (workspaceFolder !== null && workspaceFolder !== undefined) {
-				canonicalIdentity = await this.editSessionIdentityService.getEditSessionIdentifier(workspaceFolder, cancellationToken);
-			}
-
-			// TODO@joyceerhl debt: don't store working changes as a child of the folder
-			folders.push({ workingChanges, name: name ?? '', canonicalIdentity: canonicalIdentity ?? undefined, absoluteUri: workspaceFolder?.uri.toString() });
-		}
+		// SCM service removed - no repositories to process for working changes
 
 		// Store contributed workspace state
 		await this.workspaceStateSynchronizer?.sync();
@@ -804,19 +729,10 @@ export class EditSessionsContribution extends Disposable implements IWorkbenchCo
 		return undefined;
 	}
 
-	private getChangedResources(repository: ISCMRepository) {
-		return repository.provider.groups.reduce((resources, resourceGroups) => {
-			resourceGroups.resources.forEach((resource) => resources.add(resource.sourceUri));
-			return resources;
-		}, new Set<URI>()); // A URI might appear in more than one resource group
-	}
+	// getChangedResources method removed with SCM
 
 	private hasEditSession() {
-		for (const repository of this.scmService.repositories) {
-			if (this.getChangedResources(repository).size > 0) {
-				return true;
-			}
-		}
+		// SCM service removed - no edit session support
 		return false;
 	}
 

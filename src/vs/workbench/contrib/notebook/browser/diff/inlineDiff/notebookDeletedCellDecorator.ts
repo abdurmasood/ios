@@ -20,7 +20,7 @@ import { MenuId } from '../../../../../../platform/actions/common/actions.js';
 import { IInstantiationService } from '../../../../../../platform/instantiation/common/instantiation.js';
 import { ServiceCollection } from '../../../../../../platform/instantiation/common/serviceCollection.js';
 import { IContextKeyService } from '../../../../../../platform/contextkey/common/contextkey.js';
-import { overviewRulerDeletedForeground } from '../../../../scm/common/quickDiff.js';
+import { overviewRulerError } from '../../../../../../editor/common/core/editorColorRegistry.js';
 
 const ttPolicy = createTrustedTypesPolicy('notebookRenderer', { createHTML: value => value });
 
@@ -149,7 +149,7 @@ export class NotebookDeletedCellDecorator extends Disposable implements INoteboo
 				viewZoneId: id,
 				options: {
 					overviewRuler: {
-						color: overviewRulerDeletedForeground,
+						color: overviewRulerError,
 						position: NotebookOverviewRulerLane.Center,
 					}
 				}

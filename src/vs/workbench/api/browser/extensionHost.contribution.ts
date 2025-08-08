@@ -49,13 +49,13 @@ import './mainThreadMessageService.js';
 import './mainThreadManagedSockets.js';
 import './mainThreadOutputService.js';
 import './mainThreadProgress.js';
-import './mainThreadQuickDiff.js';
+// MainThreadQuickDiff removed with SCM
 import './mainThreadQuickOpen.js';
 import './mainThreadRemoteConnectionData.js';
 import './mainThreadSaveParticipant.js';
 import './mainThreadSpeech.js';
 import './mainThreadEditSessionIdentityParticipant.js';
-import './mainThreadSCM.js';
+// MainThreadSCM removed with SCM
 import './mainThreadSearch.js';
 import './mainThreadStatusBar.js';
 import './mainThreadStorage.js';
