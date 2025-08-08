@@ -6,13 +6,13 @@
 import { reverseOrder, compareBy, numberComparator, sumBy } from '../../../../../base/common/arrays.js';
 import { IntervalTimer, TimeoutTimer } from '../../../../../base/common/async.js';
 import { toDisposable, Disposable } from '../../../../../base/common/lifecycle.js';
-import { mapObservableArrayCached, derived, IObservable, observableSignal, runOnChange } from '../../../../../base/common/observable.js';
+import { mapObservableArrayCached, derived, IObservable, observableSignal, runOnChange, constObservable } from '../../../../../base/common/observable.js';
 import { URI } from '../../../../../base/common/uri.js';
 import { generateUuid } from '../../../../../base/common/uuid.js';
 import { TextModelEditSource } from '../../../../../editor/common/textModelEditSource.js';
 import { IInstantiationService } from '../../../../../platform/instantiation/common/instantiation.js';
 import { ITelemetryService } from '../../../../../platform/telemetry/common/telemetry.js';
-import { ISCMRepository, ISCMService } from '../../../scm/common/scm.js';
+// SCM service removed - edit telemetry functionality disabled
 import { AnnotatedDocuments, AnnotatedDocument } from '../helpers/annotatedDocuments.js';
 import { ChatArcTelemetrySender, InlineEditArcTelemetrySender } from './arcTelemetrySender.js';
 import { createDocWithJustReason, EditSource } from '../helpers/documentWithAnnotatedEdits.js';
@@ -301,26 +301,22 @@ class TrackedDocumentInfo extends Disposable {
 }
 
 class ScmBridge {
-	constructor(
-		@ISCMService private readonly _scmService: ISCMService
-	) { }
+	constructor() {
+		// SCM service removed
+	}
 
 	public async getRepo(uri: URI): Promise<ScmRepoBridge | undefined> {
-		const repo = this._scmService.getRepository(uri);
-		if (!repo) {
-			return undefined;
-		}
-		return new ScmRepoBridge(repo);
+		// SCM service removed - always return undefined
+		return undefined;
 	}
 }
 
 export class ScmRepoBridge {
-	public readonly headBranchNameObs: IObservable<string | undefined> = derived(reader => this._repo.provider.historyProvider.read(reader)?.historyItemRef.read(reader)?.name);
-	public readonly headCommitHashObs: IObservable<string | undefined> = derived(reader => this._repo.provider.historyProvider.read(reader)?.historyItemRef.read(reader)?.revision);
+	public readonly headBranchNameObs: IObservable<string | undefined> = constObservable(undefined);
+	public readonly headCommitHashObs: IObservable<string | undefined> = constObservable(undefined);
 
-	constructor(
-		private readonly _repo: ISCMRepository,
-	) {
+	constructor() {
+		// SCM repository removed
 	}
 
 	async isIgnored(uri: URI): Promise<boolean> {

@@ -25,7 +25,7 @@ import { IChatAttachmentResolveService, ImageTransferData } from './chatAttachme
 import { ChatAttachmentModel } from './chatAttachmentModel.js';
 import { IChatInputStyles } from './chatInputPart.js';
 import { convertStringToUInt8Array } from './imageUtils.js';
-import { extractSCMHistoryItemDropData } from '../../scm/browser/scmHistoryChatContext.js';
+// extractSCMHistoryItemDropData removed with SCM
 
 enum ChatDragAndDropType {
 	FILE_INTERNAL,
@@ -235,12 +235,7 @@ export class ChatDragAndDrop extends Themable {
 			}
 		}
 
-		if (containsDragType(e, CodeDataTransfers.SCM_HISTORY_ITEM)) {
-			const scmHistoryItemData = extractSCMHistoryItemDropData(e);
-			if (scmHistoryItemData) {
-				return this.chatAttachmentResolveService.resolveSourceControlHistoryItemAttachContext(scmHistoryItemData);
-			}
-		}
+		// SCM history item drop removed with SCM
 
 		const markerData = extractMarkerDropData(e);
 		if (markerData) {

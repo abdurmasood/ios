@@ -22,7 +22,6 @@ import { Extensions as ViewContainerExtensions, ICustomViewDescriptor, IViewCont
 import { VIEWLET_ID as DEBUG } from '../../contrib/debug/common/debug.js';
 import { VIEWLET_ID as EXPLORER } from '../../contrib/files/common/files.js';
 import { VIEWLET_ID as REMOTE } from '../../contrib/remote/browser/remoteExplorer.js';
-import { VIEWLET_ID as SCM } from '../../contrib/scm/common/scm.js';
 import { WebviewViewPane } from '../../contrib/webviewView/browser/webviewViewPane.js';
 import { isProposedApiEnabled } from '../../services/extensions/common/extensions.js';
 import { ExtensionMessageCollector, ExtensionsRegistry, IExtensionPoint, IExtensionPointUser } from '../../services/extensions/common/extensionsRegistry.js';
@@ -155,7 +154,7 @@ const viewDescriptor: IJSONSchema = {
 			],
 			default: 'visible',
 			enumDescriptions: [
-				localize('vscode.extension.contributes.view.initialState.visible', "The default initial state for the view. In most containers the view will be expanded, however; some built-in containers (explorer, scm, and debug) show all contributed views collapsed regardless of the `visibility`."),
+				localize('vscode.extension.contributes.view.initialState.visible', "The default initial state for the view. In most containers the view will be expanded, however; some built-in containers (explorer and debug) show all contributed views collapsed regardless of the `visibility`."),
 				localize('vscode.extension.contributes.view.initialState.hidden', "The view will not be shown in the view container, but will be discoverable through the views menu and other view entry points and can be un-hidden by the user."),
 				localize('vscode.extension.contributes.view.initialState.collapsed', "The view will show in the view container, but will be collapsed.")
 			]
@@ -212,12 +211,6 @@ const viewsContribution: IJSONSchema = {
 		},
 		'debug': {
 			description: localize('views.debug', "Contributes views to Debug container in the Activity bar"),
-			type: 'array',
-			items: viewDescriptor,
-			default: []
-		},
-		'scm': {
-			description: localize('views.scm', "Contributes views to SCM container in the Activity bar"),
 			type: 'array',
 			items: viewDescriptor,
 			default: []
@@ -612,7 +605,6 @@ class ViewsExtensionHandler implements IWorkbenchContribution {
 		switch (value) {
 			case 'explorer': return this.viewContainersRegistry.get(EXPLORER);
 			case 'debug': return this.viewContainersRegistry.get(DEBUG);
-			case 'scm': return this.viewContainersRegistry.get(SCM);
 			case 'remote': return this.viewContainersRegistry.get(REMOTE);
 			default: return this.viewContainersRegistry.get(`workbench.view.extension.${value}`);
 		}
@@ -621,7 +613,6 @@ class ViewsExtensionHandler implements IWorkbenchContribution {
 	private showCollapsed(container: ViewContainer): boolean {
 		switch (container.id) {
 			case EXPLORER:
-			case SCM:
 			case DEBUG:
 				return true;
 		}

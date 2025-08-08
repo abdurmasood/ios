@@ -243,7 +243,6 @@ import './contrib/searchEditor/browser/searchEditor.contribution.js';
 import './contrib/sash/browser/sash.contribution.js';
 
 // SCM
-import './contrib/scm/browser/scm.contribution.js';
 
 // Debug
 import './contrib/debug/browser/debug.contribution.js';

@@ -1478,7 +1478,7 @@ export namespace ProgressLocation {
 		}
 
 		switch (loc) {
-			case types.ProgressLocation.SourceControl: return MainProgressLocation.Scm;
+			// SourceControl progress location removed with SCM
 			case types.ProgressLocation.Window: return MainProgressLocation.Window;
 			case types.ProgressLocation.Notification: return MainProgressLocation.Notification;
 		}

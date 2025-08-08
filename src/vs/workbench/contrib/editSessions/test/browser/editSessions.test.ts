@@ -13,8 +13,7 @@ import { NullLogService } from '../../../../../platform/log/common/log.js';
 import { EditSessionsContribution } from '../../browser/editSessions.contribution.js';
 import { ProgressService } from '../../../../services/progress/browser/progressService.js';
 import { IProgressService } from '../../../../../platform/progress/common/progress.js';
-import { ISCMService } from '../../../scm/common/scm.js';
-import { SCMService } from '../../../scm/common/scmService.js';
+// SCM services removed - test functionality disabled
 import { TestConfigurationService } from '../../../../../platform/configuration/test/common/testConfigurationService.js';
 import { IConfigurationService } from '../../../../../platform/configuration/common/configuration.js';
 import { IWorkspaceContextService, WorkbenchState } from '../../../../../platform/workspace/common/workspace.js';
@@ -94,7 +93,7 @@ suite('Edit session sync', () => {
 			override onDidChangeExtensions = Event.None;
 		});
 		instantiationService.stub(IProgressService, ProgressService);
-		instantiationService.stub(ISCMService, SCMService);
+		// SCM service removed
 		instantiationService.stub(IEnvironmentService, TestEnvironmentService);
 		instantiationService.stub(ITelemetryService, NullTelemetryService);
 		instantiationService.stub(IDialogService, new class extends mock<IDialogService>() {
@@ -130,7 +129,7 @@ suite('Edit session sync', () => {
 		});
 
 		// Stub repositories
-		instantiationService.stub(ISCMService, '_repositories', new Map());
+		// SCM service removed
 		instantiationService.stub(IContextKeyService, new MockContextKeyService());
 		instantiationService.stub(IThemeService, new class extends mock<IThemeService>() {
 			override onDidColorThemeChange = Event.None;

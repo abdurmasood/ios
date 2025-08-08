@@ -49,7 +49,7 @@ import { IPreferencesService } from '../../../services/preferences/common/prefer
 import { revealInSideBarCommand } from '../../files/browser/fileActions.contribution.js';
 import { CellUri } from '../../notebook/common/notebookCommon.js';
 import { INotebookService } from '../../notebook/common/notebookService.js';
-import { getHistoryItemEditorTitle, getHistoryItemHoverContent } from '../../scm/browser/util.js';
+// getHistoryItemEditorTitle and getHistoryItemHoverContent removed with SCM
 import { IChatContentReference } from '../common/chatService.js';
 import { IChatRequestPasteVariableEntry, IChatRequestToolEntry, IChatRequestToolSetEntry, IChatRequestVariableEntry, IElementVariableEntry, INotebookOutputVariableEntry, IPromptFileVariableEntry, IPromptTextVariableEntry, ISCMHistoryItemVariableEntry, OmittedState, PromptFileVariableKind } from '../common/chatVariableEntries.js';
 import { ILanguageModelChatMetadataAndIdentifier, ILanguageModelsService } from '../common/languageModels.js';
@@ -815,7 +815,7 @@ export class SCMHistoryItemAttachmentWidget extends AbstractChatAttachmentWidget
 		this.element.style.cursor = 'pointer';
 		this.element.ariaLabel = localize('chat.attachment', "Attached context, {0}", attachment.name);
 
-		this._store.add(hoverService.setupManagedHover(hoverDelegate, this.element, () => getHistoryItemHoverContent(themeService, attachment.historyItem), { trapFocus: true }));
+		// Hover content removed with SCM
 
 		this._store.add(dom.addDisposableListener(this.element, dom.EventType.CLICK, (e: MouseEvent) => {
 			dom.EventHelper.stop(e, true);
@@ -835,7 +835,7 @@ export class SCMHistoryItemAttachmentWidget extends AbstractChatAttachmentWidget
 
 	private async _openAttachment(attachment: ISCMHistoryItemVariableEntry): Promise<void> {
 		await this.commandService.executeCommand('_workbench.openMultiDiffEditor', {
-			title: getHistoryItemEditorTitle(attachment.historyItem), multiDiffSourceUri: attachment.value
+			title: 'SCM History (removed)', multiDiffSourceUri: attachment.value
 		});
 	}
 }

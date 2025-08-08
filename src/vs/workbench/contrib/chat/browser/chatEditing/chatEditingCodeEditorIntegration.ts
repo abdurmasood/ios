@@ -33,7 +33,8 @@ import { TextEditorSelectionRevealType } from '../../../../../platform/editor/co
 import { IInstantiationService } from '../../../../../platform/instantiation/common/instantiation.js';
 import { EditorsOrder, IEditorIdentifier, isDiffEditorInput } from '../../../../common/editor.js';
 import { IEditorService } from '../../../../services/editor/common/editorService.js';
-import { overviewRulerModifiedForeground, minimapGutterModifiedBackground, overviewRulerAddedForeground, minimapGutterAddedBackground, overviewRulerDeletedForeground, minimapGutterDeletedBackground } from '../../../scm/common/quickDiff.js';
+import { overviewRulerInfo, overviewRulerError, overviewRulerWarning } from '../../../../../editor/common/core/editorColorRegistry.js';
+import { minimapInfo, minimapError, minimapWarning } from '../../../../../platform/theme/common/colors/minimapColors.js';
 import { IChatAgentService } from '../../common/chatAgents.js';
 import { IModifiedFileEntry, IModifiedFileEntryChangeHunk, IModifiedFileEntryEditorIntegration, ModifiedFileEntryState } from '../../common/chatEditingService.js';
 import { isTextDiffEditorForEntry } from './chatEditing.js';
@@ -287,9 +288,9 @@ export class ChatEditingCodeEditorIntegration implements IModifiedFileEntryEdito
 				minimap: { color: themeColorFromId(minimapColor), position: MinimapPosition.Gutter },
 			});
 		};
-		const modifiedDecoration = createOverviewDecoration(overviewRulerModifiedForeground, minimapGutterModifiedBackground);
-		const addedDecoration = createOverviewDecoration(overviewRulerAddedForeground, minimapGutterAddedBackground);
-		const deletedDecoration = createOverviewDecoration(overviewRulerDeletedForeground, minimapGutterDeletedBackground);
+		const modifiedDecoration = createOverviewDecoration(overviewRulerWarning, minimapWarning);
+		const addedDecoration = createOverviewDecoration(overviewRulerInfo, minimapInfo);
+		const deletedDecoration = createOverviewDecoration(overviewRulerError, minimapError);
 
 		this._diffHunksRenderStore.clear();
 		this._diffHunkWidgets.length = 0;
